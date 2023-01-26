@@ -1,19 +1,27 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView, \
+    DestroyAPIView, RetrieveAPIView
 
 from rest_framework.permissions import IsAuthenticated
 
 from organizations.models import Retail, Factory, Entrepreneur, Contact, Product
 from organizations.serializers import FactorySerializer, RetailSerializer, EntrepreneurSerializer, ContactSerializer, \
-    ProductSerializer
+    ProductSerializer, FactoryUpdateSerializer, FactoryCreateSerializer, FactoryDeleteSerializer, \
+    RetailCreateSerializer, RetailUpdateSerializer, RetailDeleteSerializer, EntrepreneurCreateSerializer, \
+    EntrepreneurUpdateSerializer, EntrepreneurDeleteSerializer
 
 
 class FactoryCreateView(CreateAPIView):
     model = Factory
     permission_classes = [IsAuthenticated]
-    serializer_class = FactorySerializer
+    serializer_class = FactoryCreateSerializer
 
 
-class FactoryView(RetrieveUpdateDestroyAPIView):
+class FactoryUpdateView(UpdateAPIView):
+    queryset = Factory.objects.all()
+    serializer_class = FactoryUpdateSerializer
+
+
+class FactoryView(RetrieveAPIView):
     model = Factory
     permission_classes = [IsAuthenticated]
     serializer_class = FactorySerializer
@@ -33,10 +41,15 @@ class FactoryListView(ListAPIView):
         return queryset
 
 
+class FactoryDeleteView(DestroyAPIView):
+    queryset = Factory.objects.all()
+    serializer_class = FactoryDeleteSerializer
+
+
 class RetailCreateView(CreateAPIView):
     model = Retail
     permission_classes = [IsAuthenticated]
-    serializer_class = RetailSerializer
+    serializer_class = RetailCreateSerializer
 
 
 class RetailListView(ListAPIView):
@@ -52,17 +65,31 @@ class RetailListView(ListAPIView):
         return queryset
 
 
-class RetailView(RetrieveUpdateDestroyAPIView):
+class RetailView(RetrieveAPIView):
     model = Retail
     permission_classes = [IsAuthenticated]
     serializer_class = RetailSerializer
     queryset = Retail.objects.all()
 
+class RetailUpdateView(UpdateAPIView):
+    queryset = Retail.objects.all()
+    serializer_class = RetailUpdateSerializer
+
+
+class RetailDeleteView(DestroyAPIView):
+    queryset = Retail.objects.all()
+    serializer_class = RetailDeleteSerializer
+
 
 class EntrepreneurCreateView(CreateAPIView):
     model = Entrepreneur
     permission_classes = [IsAuthenticated]
-    serializer_class = EntrepreneurSerializer
+    serializer_class = EntrepreneurCreateSerializer
+
+
+class EntrepreneurUpdateView(UpdateAPIView):
+    queryset = Entrepreneur.objects.all()
+    serializer_class = EntrepreneurUpdateSerializer
 
 
 class EntrepreneurListView(ListAPIView):
@@ -78,11 +105,16 @@ class EntrepreneurListView(ListAPIView):
         return queryset
 
 
-class EntrepreneurView(RetrieveUpdateDestroyAPIView):
+class EntrepreneurView(RetrieveAPIView):
     model = Entrepreneur
     permission_classes = [IsAuthenticated]
     serializer_class = EntrepreneurSerializer
     queryset = Entrepreneur.objects.all()
+
+
+class EntrepreneurDeleteView(DestroyAPIView):
+    queryset = Entrepreneur.objects.all()
+    serializer_class = EntrepreneurDeleteSerializer
 
 
 class ContactCreateView(CreateAPIView):
